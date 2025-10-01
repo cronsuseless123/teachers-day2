@@ -7,14 +7,14 @@
     body {
       margin: 0;
       padding: 0;
-      background: linear-gradient(to bottom right, #007BFF, #FFD700); /* blue to yellow */
       height: 100vh;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom right, #007BFF, #FFD700);
       display: flex;
       justify-content: center;
       align-items: center;
-      font-family: Arial, sans-serif;
-      color: #fff;
       text-align: center;
+      color: #fff;
     }
 
     .container {
@@ -44,18 +44,103 @@
       background-color: #007BFF;
       color: #fff;
     }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      color: #333;
+      position: relative;
+    }
+
+    .cake {
+      font-size: 5em;
+      margin-bottom: 15px;
+    }
+
+    /* Confetti styles */
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: red;
+      animation: fall 3s linear infinite;
+      opacity: 0;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(600px) rotate(720deg);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 <body>
+
+  <!-- Main Container -->
   <div class="container">
     <h1>Happy Teachers' Day, Sir Venchito!</h1>
-    <button onclick="showMessage()">Click Me!</button>
+    <button onclick="openModal()">Click Me!</button>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <div class="cake">🎂</div>
+      <h2>Happy Teachers Day Sir Venchito!</h2>
+      <button onclick="launchConfetti()">Celebrate 🎉</button>
+    </div>
   </div>
 
   <script>
-    function showMessage() {
-      alert("Happy Teachers Day Sir Venchito!");
+    function openModal() {
+      document.getElementById("modal").style.display = "flex";
+    }
+
+    function launchConfetti() {
+      alert("Happy Teachers Day Sir Venchito!"); // Pop-up alert
+
+      for (let i = 0; i < 100; i++) {
+        let confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+
+        // Set random color and position
+        let colors = ["#FF4136", "#2ECC40", "#0074D9", "#FFDC00", "#B10DC9"];
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.left = Math.random() * window.innerWidth + "px";
+        confetti.style.top = "-20px";
+        confetti.style.opacity = 1;
+
+        document.body.appendChild(confetti);
+
+        // Remove confetti after 3s
+        setTimeout(() => {
+          confetti.remove();
+        }, 3000);
+      }
     }
   </script>
+
 </body>
 </html>
